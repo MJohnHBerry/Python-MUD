@@ -1,8 +1,3 @@
-# Abel's notes
-# Index:
-# 1. 79
-# 2. 117
-# 3. 141
 import time, math, random
 
 
@@ -10,7 +5,7 @@ import time, math, random
 #                           Classes                            
 #---------------------------------------------------------------#
 class Entity:
-    def __init__ (self, name, attack, defense, speed, hp, max_hp, is_human, first_strike, dead, turn_ended, turn_went):
+    def __init__ (self, name, attack, defense, speed, hp, max_hp, is_human, first_strike, is_dead, turn_ended):
         self.name = name
         self.attack = attack
         self.defense = defense
@@ -21,7 +16,6 @@ class Entity:
         self.first_strike = first_strike
         self.is_dead = is_dead
         self.turn_ended = turn_ended
-        self.turn_went = turn_went 
 
 #---------------------------------------------------------------#
 #                           Globals                            
@@ -41,9 +35,7 @@ npc1 = Entity("Maximus",
                   True,    # Is Human Entity bool
                   False,    # Did he win First Strike bool
                   False,    # Is Entity dead bool
-                  False,    # Has Turn Ended bool
-                  False)    # Has Entity used it's turn bool
-
+                  False)   # Has Turn Ended bool
 
 
 #---------------------------------------------------------------#
@@ -62,8 +54,7 @@ def game_intro():
                   True,    # Is Human Entity bool
                   False,    # Did he win First Strike bool
                   False,    # Is Entity dead bool
-                  False,    # Has Turn Ended bool
-                  False)    # Has Entity used it's turn bool
+                  False)  # Has Turn Ended bool
     print("Step forth, ", player1.name, ".")
     print(player1.name, " steps forward onto the sands of blood to face his opponent, ", npc1.name,"...")
 
@@ -101,6 +92,7 @@ def skill_psyche(speedup):
         return speedup.speed - 4
 
 
+
 #---------------------------------------------------------------#
 #                           Combat                            
 #---------------------------------------------------------------#
@@ -110,7 +102,7 @@ def turn_counter():
     print("Current combat turn: ", COUNT)
 
 
-def get_player_combat_choice():
+def get_player_combat_choice(Attacker, Defender):
     user_input = input("""
     (A)ttack
     (D)efend
@@ -133,7 +125,7 @@ def get_player_combat_choice():
         print("Please choose correctly.")
         speed_check(Attacker, Defender)
             
-def npc_combat_choice():
+def npc_combat_choice(Attacker, Defender):
     rand = random.randint(1, 3)
     if rand == 1 :
         skill_attack(Defender, Attacker)
@@ -149,15 +141,14 @@ def npc_combat_choice():
 
 def speed_check(Attacker, Defender):
     if(Attacker.speed >= Defender.speed and Attacker.turn_ended == False):
-      get_player_combat_choice()
+        get_player_combat_choice()
     elif(Attacker.speed <= Defender.speed and Attacker.turn_ended == False):
-      get_p
-      
+        get_p
+
 def is_dead(entity):
 	if(entity.hp <= 0):
-    	entity.is_dead = True
-        print("You have")
-    
+        entity.is_dead = True
+        print("")
 
     
 #---------------------------------------------------------------#
